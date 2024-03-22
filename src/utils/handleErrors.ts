@@ -16,5 +16,5 @@ export const handleServerError = (
 ): ServiceReturn => {
     const err = resolveError(error);
     logger.error(`${message} error: ${err.stack}`);
-    return { status: 500, data: { msg: err.message } };
+    return { status: 500, data: { message: err.message } };
 };

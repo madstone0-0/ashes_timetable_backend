@@ -3,11 +3,14 @@ import { httpLogger, logger } from "./logging";
 import { HOST, PORT } from "./constants";
 import timeT from "./routes/timetable";
 import helmet from "helmet";
+import cors from "cors";
 
 const app = express();
 app.use(httpLogger);
 app.use(express.json());
 app.use(helmet());
+// app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(cors());
 
 export const prettyPrint = <T>(log: T) => {
     return JSON.stringify(log, undefined, 4);
@@ -15,7 +18,7 @@ export const prettyPrint = <T>(log: T) => {
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     console.error(err.stack);
-    res.status(500).send({ msg: "Server error!" });
+    res.status(500).send({ message: "Server error!" });
 });
 
 app.get("/health", (req, res) => {

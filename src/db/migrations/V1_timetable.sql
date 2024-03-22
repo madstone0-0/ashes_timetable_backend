@@ -35,7 +35,7 @@ CREATE TABLE public.timetable (
 );
 
 
-ALTER TABLE public.timetable OWNER TO mads;
+ALTER TABLE public.timetable OWNER TO postgres;
 
 --
 -- Data for Name: timetable; Type: TABLE DATA; Schema: public; Owner: mads

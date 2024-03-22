@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  backend:
+    restart: unless-stopped
+    image: backend:latest
+    env_file: ./.env
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      - PG_USER=$PG_USER
+      - PG_PASSWORD=$PG_PASS
+      - PG_HOST=$PG_HOST
+      - PG_DATABASE=$PG_DB
+      - PG_PORT=$PG_PORT
+    ports:
+      - "9000:3000"
+    stdin_open: true
+    tty: true
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    build:
+      context: ./
+      dockerfile: ./docker/db/Dockerfile
+    ports:
+      - "$PG_LOCAL_PORT:$PG_PORT"
+    environment:
+      - POSTGRES_USER=$PG_USER
+      - POSTGRES_PASSWORD=$PG_PASS
+      - POSTGRES_DB=$PG_DB
+    volumes:
+      - db:/var/lib/postgres
+volumes:
+  db:
